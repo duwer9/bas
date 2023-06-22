@@ -1,19 +1,19 @@
 <html>
 <body>
-<h1>Dropdown Klant</h1>
+<h1>Dropdown Leverancier</h1>
 
 <?php
-include_once 'klant.php';
+include "classes/leveranciers.php";
 
-// Create a Klant object
-$klant = new Klant();
+// Maak een object Leverancier
+$leverancier = new Leverancier;
  
 ?>
 
 <form method='post'>
 	<?php
-		isset($_POST['kies-btn']) ? $nr=$_POST['klantnr'] : $nr=-1;
-		$klant->dropDownKlant($nr);
+		isset($_POST['kies-btn']) ? $levId=$_POST['levId'] : $levId=-1;
+		$leverancier->dropDownLeverancier($levId);
 	?>
 	<br>
 	<input type='submit' name='kies-btn' value='Kies'></input>
@@ -22,10 +22,10 @@ $klant = new Klant();
 <?php
 
 if (isset($_POST['kies-btn'])){
-	$klant->klantId = $_POST['klantnr'];
-	$row = $klant->getKlant($_POST['klantnr']);
+	$leverancier->id = $_POST['levId'];
+	$row = $leverancier->getLeverancier();
 	
-	echo "Gekozen waarde: nr: $_POST[klantnr] $row[klantNaam] $row[klantEmail]"; 
+	echo "Gekozen waarde: id: $_POST[levId] $row[levNaam] $row[levContact] $row[levEmail] $row[levAdres] $row[levPostcode] $row[levWoonplaats]"; 
 }
 ?>
 

@@ -1,52 +1,59 @@
 <?php
-// Inclusief de artikelklasse
-require_once 'classes/Artikel.php';
 
-// Verwerk het formulierinzending
-if (isset($_POST['submit'])) {
-    // Ontvang de ingediende gegevens
-    $artOmschrijving = $_POST['artOmschrijving'];
-    $artInkoop = $_POST['artInkoop'];
-    $artVerkoop = $_POST['artVerkoop'];
-    $artVoorraad = $_POST['artVoorraad'];
-    $artMinVoorraad = $_POST['artMinVoorraad'];
-    $artMaxVoorraad = $_POST['artMaxVoorraad'];
-    $artLocatie = (int)$_POST['artLocatie']; // Converteer naar een integer
+if(isset($_POST["insert"]) && $_POST["insert"] == "Toevoegen"){
+		
+		include_once 'classes/artikelen.php';
+		
+		$artikel = new Artikel;
+		//$artikel->setObject(0, $_POST['artOmschrijving'], $_POST['artInkoop, $_POST['artVerkoop'], $_POST['artVoorraad'], $_POST['artMinVoorraad'], $_POST['artMaxVoorraad'], $_POST['artLocatie']);
+		//$artikel->insertKlant();
+		$artikel->insertArtikel2($_POST['artOmschrijving'], $_POST['artInkoop'], $_POST['artVerkoop'], $_POST['artVoorraad'], $_POST['artMinVoorraad'], $_POST['artMaxVoorraad'], $_POST['artLocatie']);
+			
+		echo "<script>alert('Artikel: $_POST[artOmschrijving] $_POST[artInkoop] $_POST[artVerkoop] $_POST[artVoorraad] $_POST[artMinVoorraad] $_POST[artMaxVoorraad] $_POST[artLocatie] is toegevoegd')</script>";
+		echo "<script> location.replace('read_artikel.php'); </script>";
+			
+	} 
 
-    // Voeg het artikel toe aan de database
-    if (Artikel::addArtikel(null, $artOmschrijving, $artInkoop, $artVerkoop, $artVoorraad, $artMinVoorraad, $artMaxVoorraad, $artLocatie)) {
-        echo "Artikel succesvol toegevoegd.";
-    } else {
-        echo "Er is een fout opgetreden bij het toevoegen van het artikel.";
-    }
-}
 ?>
 
-<!-- HTML-formulier om artikelgegevens in te voeren -->
 <!DOCTYPE html>
 <html>
-
 <head>
-    <link rel="stylesheet" href="styles.css">
-    <title>Artikelgegevens</title>
+  <link rel="stylesheet" type="text/css" href="../style.css">
 </head>
-
 <body>
-    <a href="index.php">Terug naar hoofdpagina</a>
-    <h1>Artikelgegevens</h1>
 
-    <!-- Artikel formulier -->
-    <h2>Nieuw artikel toevoegen</h2>
-    <form method="post" action="insert_artikel.php">
-        Omschrijving: <input type="text" name="artOmschrijving" required><br>
-        Inkoopprijs: <input type="text" name="artInkoop" required><br>
-        Verkoopprijs: <input type="text" name="artVerkoop" required><br>
-        Voorraad: <input type="text" name="artVoorraad" required><br>
-        Minimum Voorraad: <input type="text" name="artMinVoorraad" required><br>
-        Maximum Voorraad: <input type="text" name="artMaxVoorraad" required><br>
-        Locatie: <input type="text" name="artLocatie" required><br>
-        <input type="submit" name="submit" value="Toevoegen">
-    </form>
+	<h1>CRUD Artikel</h1>
+	<h2>Toevoegen</h2>
+	<form method="post">
+	<label for="ao">Artikel omschrijving:</label>
+   <input type="text" id="ao" name="artOmschrijving" placeholder="Artikel omschrijving" required/>
+   <br>   
+   <label for="ai">Artikel inkoop:</label>
+   <input type="text" id="ai" name="artInkoop" placeholder="Artikel inkoop" required/>
+   <br>
+   <label for="ave">Artikel verkoop:</label>
+   <input type="text" id="ave" name="artVerkoop" placeholder="Artikel verkoop" required/>
+   <br>   
+   <label for="avo">Artikel voorraad:</label>
+   <input type="text" id="avo" name="artVoorraad" placeholder="Artikel voorraad" required/>
+   <br>
+   <label for="amiv">Artikel minimale voorraad:</label>
+   <input type="text" id="amiv" name="artMinVoorraad" placeholder="Artikel minimale voorraad" required/>
+   <br>   
+   <label for="amav">Artikel maximale voorraad:</label>
+   <input type="text" id="amav" name="artMaxVoorraad" placeholder="Artikel maximale voorraad" required/>
+   <br>
+   <label for="al">Artikel locatie:</label>
+   <input type="text" id="al" name="artLocatie" placeholder="Artikel locatie" required/>
+   <br><br>
+	<input type='submit' name='insert' value='Toevoegen'>
+	</form></br>
+
+	<a href='read_artikel.php'>Terug</a>
+
 </body>
-
 </html>
+
+
+
